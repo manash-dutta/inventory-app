@@ -4,8 +4,6 @@ let products = ProductModel.get();
 export default class ProductController {
   getProducts(req, res) {
     res.render("products", { products: products });
-    // return res.sendFile(join(resolve(), "src", "views", "products.html"));
-    // return res.sendFile(resolve("src", "views", "products.html"));
   }
 
   getAddProduct(req, res) {
@@ -20,7 +18,6 @@ export default class ProductController {
   }
 
   getUpdateProductView(req, res, next) {
-    // If product exist return view else return errors
     const id = req.params.id; // params allows us access to URL parameters like :id
     const productFound = ProductModel.getById(id);
     if (productFound) {
@@ -28,5 +25,11 @@ export default class ProductController {
     } else {
       res.status(401).send("Product not found");
     }
+  }
+
+  postUpdateProduct(req, res) {
+    ProductModel.update(req.body);
+    let products = ProductModel.get();
+    res.render("products", { products });
   }
 }

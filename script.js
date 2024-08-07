@@ -20,10 +20,10 @@ server.use(ejsLayouts);
 const productController = new ProductController();
 
 server.get("/", productController.getProducts);
-server.get("/new-product", productController.getAddProduct);
+server.get("/add-product", productController.getAddProduct);
 server.get("/update-product/:id", productController.getUpdateProductView);
 server.post("/", addProductFormValidate, productController.postAddNewProduct);
-
+server.post("/update-product", productController.postUpdateProduct);
 server.use(express.static("src/views"));
 
 server.listen(2200, () => {
