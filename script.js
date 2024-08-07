@@ -6,7 +6,8 @@ import { addProductFormValidate } from "./src/middlewares/validation.middleware.
 
 // Create server
 const server = express();
-
+// Enabling static folder public to use the main.js
+server.use(express.static("public"));
 // Parse form data
 server.use(express.urlencoded({ extended: true }));
 
@@ -24,6 +25,7 @@ server.get("/add-product", productController.getAddProduct);
 server.get("/update-product/:id", productController.getUpdateProductView);
 server.post("/", addProductFormValidate, productController.postAddNewProduct);
 server.post("/update-product", productController.postUpdateProduct);
+server.post("/delete-product/:id", productController.getDeleteProduct);
 server.use(express.static("src/views"));
 
 server.listen(2200, () => {

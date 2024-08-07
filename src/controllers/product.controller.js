@@ -1,8 +1,9 @@
 import ProductModel from "../models/product.model.js";
 
-let products = ProductModel.get();
+// let products = ProductModel.get();
 export default class ProductController {
   getProducts(req, res) {
+    let products = ProductModel.get();
     res.render("products", { products: products });
   }
 
@@ -30,6 +31,17 @@ export default class ProductController {
   postUpdateProduct(req, res) {
     ProductModel.update(req.body);
     let products = ProductModel.get();
+    res.render("products", { products });
+  }
+
+  getDeleteProduct(req, res) {
+    const id = req.params.id;
+    let products = ProductModel.get();
+    const productFound = ProductModel.getById(id);
+    if (!productFound) {
+      return res.status(401).send("Product not found");
+    }
+    ProductModel.delete(id);
     res.render("products", { products });
   }
 }

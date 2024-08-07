@@ -23,8 +23,13 @@ export default class ProductModel {
   }
 
   static update(productObj) {
-    const index = products.findIndex((p) => p.id == productObj.id);
+    const index = products.findIndex((p) => p.id === Number(productObj.id));
     products[index] = productObj;
+  }
+
+  static delete(id) {
+    const index = products.findIndex((p) => p.id === Number(id));
+    products.splice(index, 1);
   }
 
   static getById(id) {
