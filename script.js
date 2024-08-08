@@ -33,9 +33,12 @@ server.post(
   addProductFormValidate,
   productController.postAddNewProduct
 );
-server.post("/update-product", productController.postUpdateProduct);
+server.post(
+  "/update-product",
+  uploadFile.single("imageUrl"),
+  productController.postUpdateProduct
+);
 server.post("/delete-product/:id", productController.postDeleteProduct);
-
 
 server.use(express.static("src/views"));
 

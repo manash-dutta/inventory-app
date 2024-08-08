@@ -2,16 +2,14 @@
 
 <h1 class="mt-5 mb-4 header">Update Product</h1>
 
-<% if (errors) { %> 
-  <% errors.forEach(error => { %>
-    <div class="alert alert-danger" role="alert">
-      <%# Display error message container only if there is an error %> 
-      <%= error.msg %>
-    </div>
-  <% }) %> 
-<% } %>
+<% if (errors) { %> <% errors.forEach(error => { %>
+<div class="alert alert-danger" role="alert">
+  <%# Display error message container only if there is an error %> <%= error.msg
+  %>
+</div>
+<% }) %> <% } %>
 
-<form action="/update-product" method="post">
+<form action="/update-product" method="post" enctype="multipart/form-data">
   <input
     type="hidden"
     class="form-control"
@@ -22,11 +20,19 @@
 
   <div class="mb-3">
     <label for="name" class="form-label">Product Name</label>
-    <input type="text" class="form-control" id="name" name="name" value="<%= product.name %>"/>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      name="name"
+      value="<%= product.name %>"
+    />
   </div>
   <div class="mb-3">
     <label for="desc" class="form-label">Product Description</label>
-    <textarea class="form-control" id="desc" name="desc" rows="3"> <%= product.desc %> </textarea>
+    <textarea class="form-control" id="desc" name="desc" rows="3">
+ <%= product.desc %> </textarea
+    >
   </div>
   <div class="mb-3">
     <label for="price" class="form-label">Price</label>
@@ -42,8 +48,7 @@
   </div>
   <div class="mb-3">
     <label for="imageUrl" class="form-label">Image URL</label>
-    <input type="text" class="form-control" id="imageUrl" name="imageUrl" value="<%= product.imageUrl %>" />
-    <!-- <input type="file" name="imageUrl" id="imageUrl" accept="images/*"> -->
+    <input type="file" name="imageUrl" id="imageUrl" accept="images/*" />
   </div>
   <button type="submit" class="btn btn-primary">Update Product</button>
 </form>

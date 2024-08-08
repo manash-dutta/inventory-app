@@ -29,11 +29,31 @@ export default class ProductController {
     res.render("products", { products });
   }
 
-  postUpdateProduct(req, res) {
-    ProductModel.update(req.body);
-    let products = ProductModel.get();
+  postUpdateProduct(req, res, next) {
+    const { id, name, desc, price } = req.body;
+    let imageUrl;
+  
+    // Check if a new file is uploaded
+    if (req.file) {
+      imageUrl = "images/" + req.file.filename;
+    } else {
+      // If no new file is uploaded, retain the existing imageUrl
+      const existingProduct = ProductModel.getById(id);
+      imageUrl = existingProduct.imageUrl;
+    }
+  
+    ProductModel.update(id, name, desc, price, imageUrl);
+  
+    const products = ProductModel.get();
     res.render("products", { products });
   }
+  
+
+  // postUpdateProduct(req, res) {
+  //   ProductModel.update(req.body);
+  //   let products = ProductModel.get();
+  //   res.render("products", { products });
+  // }
 
   postDeleteProduct(req, res) {
     const id = req.params.id;
@@ -46,24 +66,3 @@ export default class ProductController {
     res.render("products", { products });
   }
 }
-
-
-
-// postUpdateProduct(req, res) {
-  //   const { id, name, desc, price } = req.body;
-  //   let imageUrl;
-
-  //   // Check if a new file is uploaded
-  //   if (req.file) {
-  //     imageUrl = "images/" + req.file.filename;
-  //   } else {
-  //     // If no new file is uploaded, retain the existing imageUrl
-  //     const existingProduct = ProductModel.getById(id);
-  //     imageUrl = existingProduct.imageUrl;
-  //   }
-
-  //   ProductModel.update(id, name, desc, price, imageUrl);
-
-  //   const products = ProductModel.get();
-  //   res.render("products", { products });
-  // }
