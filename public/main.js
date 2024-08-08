@@ -5,7 +5,8 @@
 //       method: "POST",
 //     }).then((res) => {
 //       if (res.ok) {
-//         location.reload();
+//         // location.reload();
+//         window.location.href = "/";
 //       }
 //     });
 //   }
@@ -21,7 +22,7 @@ async function deleteProduct(id) {
         method: "POST",
       });
       if (response.ok) {
-        location.reload();
+        window.location.href = "/";
       } else {
         console.error("Failed to delete the product.");
       }

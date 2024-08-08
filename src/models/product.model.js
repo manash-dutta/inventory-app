@@ -11,13 +11,13 @@ export default class ProductModel {
     return products;
   }
 
-  static add(productObj) {
+  static add(name, desc, price, imageUrl) {
     let newProduct = new ProductModel(
       products.length + 1,
-      productObj.name,
-      productObj.desc,
-      productObj.price,
-      productObj.imageUrl
+      name,
+      desc,
+      price,
+      imageUrl
     );
     products.push(newProduct);
   }
@@ -60,3 +60,16 @@ var products = [
     "https://m.media-amazon.com/images/I/31PBdo581fL._SX317_BO1,204,203,200_.jpg"
   ),
 ];
+
+
+
+  // static update(id, name, desc, price, imageUrl) {
+  //   const index = products.findIndex((p) => p.id === Number(id));
+  //   products[index] = {
+  //     ...products[index],
+  //     name,
+  //     desc,
+  //     price,
+  //     imageUrl,
+  //   };
+  // }

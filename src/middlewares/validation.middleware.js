@@ -6,7 +6,12 @@ export const addProductFormValidate = async (req, res, next) => {
     body("price")
       .isFloat({ gt: 0 })
       .withMessage("Price must be a positive value."),
-    body("imageUrl").isURL().withMessage("URL is invalid"),
+    body("imageUrl").custom((value, { req }) => {
+      if (!req.file) {
+        throw new Error("Image is required");
+      }
+      return true;
+    }),
   ];
   // Run the rules
   await Promise.all(rules.map((rule) => rule.run(req)));
@@ -19,3 +24,36 @@ export const addProductFormValidate = async (req, res, next) => {
     next();
   }
 };
+
+
+/* 
+import { body, validationResult } from "express-validator";
+
+const validateProductForm = () => {
+  return [
+    body("name").notEmpty().withMessage("Name is required"),
+    body("price")
+      .isFloat({ gt: 0 })
+      .withMessage("Price must be a positive value."),
+    body("imageUrl").custom((value, { req }) => {
+      if (!req.file && !req.body.imageUrl) {
+        throw new Error("Image is required");
+      }
+      return true;
+    }),
+  ];
+};
+
+const handleValidationErrors = (viewName) => {
+  return (req, res, next) => {
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+      return res.render(viewName, { product: req.body, errors: validationErrors.array() });
+    }
+    next();
+  };
+};
+
+export { validateProductForm, handleValidationErrors };
+
+*/

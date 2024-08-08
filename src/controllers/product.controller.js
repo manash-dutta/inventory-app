@@ -1,21 +1,13 @@
 import ProductModel from "../models/product.model.js";
 
-// let products = ProductModel.get();
 export default class ProductController {
-  getProducts(req, res) {
+  getProducts(req, res, next) {
     let products = ProductModel.get();
     res.render("products", { products: products });
   }
 
-  getAddProduct(req, res) {
+  getAddProduct(req, res, next) {
     res.render("new-product", { errors: null });
-  }
-
-  // Need more clarity
-  postAddNewProduct(req, res, next) {
-    ProductModel.add(req.body);
-    let products = ProductModel.get();
-    res.render("products", { products });
   }
 
   getUpdateProductView(req, res, next) {
@@ -28,13 +20,22 @@ export default class ProductController {
     }
   }
 
+
+  postAddNewProduct(req, res, next) {
+    const { name, desc, price } = req.body;
+    const imageUrl = "images/" + req.file.filename;
+    ProductModel.add(name, desc, price, imageUrl);
+    let products = ProductModel.get();
+    res.render("products", { products });
+  }
+
   postUpdateProduct(req, res) {
     ProductModel.update(req.body);
     let products = ProductModel.get();
     res.render("products", { products });
   }
 
-  getDeleteProduct(req, res) {
+  postDeleteProduct(req, res) {
     const id = req.params.id;
     let products = ProductModel.get();
     const productFound = ProductModel.getById(id);
@@ -45,3 +46,24 @@ export default class ProductController {
     res.render("products", { products });
   }
 }
+
+
+
+// postUpdateProduct(req, res) {
+  //   const { id, name, desc, price } = req.body;
+  //   let imageUrl;
+
+  //   // Check if a new file is uploaded
+  //   if (req.file) {
+  //     imageUrl = "images/" + req.file.filename;
+  //   } else {
+  //     // If no new file is uploaded, retain the existing imageUrl
+  //     const existingProduct = ProductModel.getById(id);
+  //     imageUrl = existingProduct.imageUrl;
+  //   }
+
+  //   ProductModel.update(id, name, desc, price, imageUrl);
+
+  //   const products = ProductModel.get();
+  //   res.render("products", { products });
+  // }
